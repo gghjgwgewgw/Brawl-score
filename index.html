@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>브롤 실력 테스트</title>
+<style>
+body{font-family:sans-serif;max-width:640px;margin:40px auto;padding:20px;}
+label{display:block;margin-top:12px;}
+input[type=number]{width:100%;padding:8px;margin-top:6px;}
+button{margin-top:16px;padding:10px 16px;font-size:16px;}
+#result{margin-top:18px;font-size:20px;font-weight:700;}
+</style>
+</head>
+<body>
+<h1>브롤 실력 테스트 (웹)</h1>
+<p>안녕하세요. 저는 당신의 브롤스타즈 실력을 봐드립니다. 솔직하게 입력하세요.</p>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSw18TzZ_GtO_YWwMJD6KwL8EdKvNT9q2Vr4l6WXQn4o5NKxfzR414bjvXH&s=10"width = "300", height = "300"
+<form id="frm" onsubmit="return false;">
+  <label>본인이 생각했을 때 본인의 브롤 실력을 1에서 100까지로 친다면?
+    <input id="a" type="number" min="1" max="100" >
+  </label>
+  <label>당신의 브롤 플레이 경력(년)
+    <input id="b" type="number" min="0" max="100" >
+  </label>
+  <label>당신이 되고 싶은 브롤스타즈 실력의 정도 (1-100)
+    <input id="c" type="number" min="1" max="100" >
+  </label>
+  <button onclick="compute()">계산하기</button>
+</form>
+
+<div id="status"></div>
+<div id="result"></div>
+
+<script>
+function compute(){
+  const a = Number(document.getElementById('a').value) || 0;
+  const b = Number(document.getElementById('b').value) || 0;
+  const c = Number(document.getElementById('c').value) || 0;
+  const status = document.getElementById('status');
+  const result = document.getElementById('result');
+  status.textContent = '계산 중...';
+  result.textContent = '';
+  // emulate a short delay
+  setTimeout(() => {
+    // scale years b to a 0-100 scale, assume each year ~5 points (cap at 100)
+    const b_scaled = Math.min(b * 5, 100);
+    // simple average
+    const score = Math.round((a + b_scaled + c) / 3);
+    let msg = '';
+    if (score <=10) msg = '마스터!!';
+    else msg = '접으세요';
+    status.textContent = '';
+    result.innerHTML =  msg;
+  }, 900);
+}
+</script>
+</body>
+</html>
